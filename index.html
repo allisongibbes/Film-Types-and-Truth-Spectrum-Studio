@@ -1,0 +1,130 @@
+<style>
+  .film-type-widget {
+    font-family: Arial, sans-serif;
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background-color: #f4f6f8;
+    text-align: center;
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #0b0f19;
+    border: 2px solid #334155;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .ft-btn {
+    padding: 10px 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #fff;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .ft-btn:hover { background-color: #e2e8f0; }
+  .ft-btn.active { background-color: #7c3aed; color: white; border-color: #6d28d9; }
+
+  .description-box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-size: 1rem;
+    color: #1e293b;
+    text-align: left;
+    min-height: 80px;
+    line-height: 1.4;
+  }
+</style>
+
+<div class="film-type-widget">
+  <h2>The Bridge: Fiction vs. Documentary vs. Experimental</h2>
+  <p>Explore how different film categories categorize their relationship with truth, scripts, and audience perception.</p>
+
+  <div class="stage" id="ftStage">
+    <!-- Rendered dynamically via JS -->
+  </div>
+
+  <div class="nav-grid">
+    <button class="ft-btn active" onclick="setFilmType('fiction')">1. Fiction</button>
+    <button class="ft-btn" onclick="setFilmType('documentary')">2. Documentary</button>
+    <button class="ft-btn" onclick="setFilmType('experimental')">3. Experimental</button>
+  </div>
+
+  <div class="description-box" id="ftDesc">
+    <strong>Fiction:</strong> A completely fabricated story staged with actors, scripts, and sets.
+  </div>
+</div>
+
+<script>
+  const ftStage = document.getElementById('ftStage');
+  const ftDesc = document.getElementById('ftDesc');
+  const ftButtons = document.querySelectorAll('.film-type-widget .ft-btn');
+
+  const filmTypes = {
+    fiction: {
+      svg: `<svg width="450" height="250" viewBox="0 0 450 250">
+              <rect x="110" y="55" width="230" height="135" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+              <!-- Clapperboard / Movie Script Icon Graphic -->
+              <rect x="150" y="85" width="150" height="80" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+              <line x1="150" y1="105" x2="300" y2="105" stroke="#38bdf8" stroke-width="1.5"/>
+              <text x="225" y="98" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">STAGED NARRATIVE</text>
+              <text x="225" y="135" fill="#94a3b8" font-size="11" text-anchor="middle">Actors, Scripts, Sets &</text>
+              <text x="225" y="152" fill="#94a3b8" font-size="11" text-anchor="middle">Fabricated Stories</text>
+              <text x="225" y="220" fill="#38bdf8" font-size="12" text-anchor="middle">Deliberate theatrical creation</text>
+            </svg>`,
+      text: "<strong>Fiction:</strong> A completely fabricated story staged with actors, scripts, and sets[cite: 5]."
+    },
+    documentary: {
+      svg: `<svg width="450" height="250" viewBox="0 0 450 250">
+              <rect x="110" y="55" width="230" height="135" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="2"/>
+              <!-- Camera Lens Record Graphic -->
+              <circle cx="225" cy="125" r="40" fill="#0f172a" stroke="#34d399" stroke-width="2"/>
+              <circle cx="225" cy="125" r="12" fill="#34d399"/>
+              <circle cx="245" cy="105" r="4" fill="#f43f5e"/>
+              <text x="225" y="78" fill="#34d399" font-size="11" font-weight="bold" text-anchor="middle">OBJECTIVE RECORD</text>
+              <text x="225" y="220" fill="#34d399" font-size="12" text-anchor="middle">Real people, events, and environments</text>
+            </svg>`,
+      text: "<strong>Documentary:</strong> A non-fiction record of real people, events, and environments meant to inform or educate objectively[cite: 5]."
+    },
+    experimental: {
+      svg: `<svg width="450" height="250" viewBox="0 0 450 250">
+              <rect x="110" y="55" width="230" height="135" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+              <!-- Abstract Wave Form / Blurs Lines Graphic -->
+              <path d="M 140 125 Q 180 80 225 125 T 310 125" fill="none" stroke="#a855f7" stroke-width="3"/>
+              <path d="M 140 145 Q 180 100 225 145 T 310 145" fill="none" stroke="#c084fc" stroke-width="2" stroke-dasharray="4,4"/>
+              <text x="225" y="78" fill="#a855f7" font-size="11" font-weight="bold" text-anchor="middle">QUESTIONING TRUTH</text>
+              <text x="225" y="220" fill="#c084fc" font-size="12" text-anchor="middle">Artifice of performance, framing & perception</text>
+            </svg>`,
+      text: "<strong>Experimental:</strong> Blurs the line entirely. It questions whether any camera can ever capture \"objective truth,\" playing with the artifice of performance, framing, and audience perception[cite: 5]."
+    }
+  };
+
+  function setFilmType(type) {
+    ftButtons.forEach(b => b.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    ftStage.innerHTML = filmTypes[type].svg;
+    ftDesc.innerHTML = filmTypes[type].text;
+  }
+</script>
